@@ -1,0 +1,88 @@
+<nav
+  class="navbar navbar-expand-lg navbar-dark bg-primary-personal bg-primary-personal dragME"
+>
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav ml-auto titlebar-button">
+      <li class="nav-item mr-1">
+        <a (click)="miniMize()" mat-mini-fab class="bg-primary-personal">
+          <span class="material-icons"> minimize </span>
+        </a>
+      </li>
+      <li class="nav-item mr-1">
+        <a (click)="maximize()" mat-mini-fab class="bg-primary-personal">
+          <span class="material-icons"> fullscreen </span>
+        </a>
+      </li>
+      <li class="nav-item mr-1">
+        <button (click)="miniClose()" mat-mini-fab class="bg-primary-personal">
+          <span class="material-icons"> close </span>
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container pt-5">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Login</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="loginForm" novalidate (ngSubmit)="submit()">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                formControlName="email"
+                [ngClass]="{
+                  'is-invalid':
+                    (loginForm.get('email').touched ||
+                      loginForm.get('email').dirty) &&
+                    !loginForm.get('email').valid
+                }"
+              />
+              <span class="invalid-feedback">
+                <span *ngIf="loginForm.get('email').errors?.required">
+                  Please enter your Email.
+                </span>
+                <span *ngIf="loginForm.get('email').errors?.email">
+                  Enter Valid Email Address
+                </span>
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="email">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                formControlName="password"
+                [ngClass]="{
+                  'is-invalid':
+                    (loginForm.get('password').touched ||
+                      loginForm.get('password').dirty) &&
+                    !loginForm.get('password').valid
+                }"
+              />
+            </div>
+            <div class="form-group">
+              <button
+                class="btn btn-raised btn-block btn-primary"
+                [title]="
+                  loginForm.valid
+                    ? 'Login'
+                    : 'Disabled until the form data is valid'
+                "
+                [disabled]="!loginForm.valid"
+              >
+                Login
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
