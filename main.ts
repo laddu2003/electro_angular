@@ -183,7 +183,7 @@ autoUpdater.on("download-progress", (progressObj) => {
     progressObj.total +
     ")";
   // dispatch(log_message)
-  // win.webContents.send("download-progress", progressObj.percent);
+  win.webContents.send("download-progress", progressObj.percent);
   console.log("download-progress", progressObj.percent);
 });
 

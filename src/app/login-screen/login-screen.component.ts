@@ -1,4 +1,4 @@
-import { TokenStoreService } from './../service/token/token-store.service';
+import { TokenStoreService } from "./../service/token/token-store.service";
 import { SnackbarService } from "./../service/snackbar/snackbar.service";
 import { AppCookiesService } from "./../service/cookies/app-cookies.service";
 import { AppAuthService } from "./../service/auth/app-auth.service";
@@ -21,7 +21,7 @@ export class LoginScreenComponent implements OnInit {
     private _cookies: AppCookiesService,
     private route: Router,
     private _snackBar: SnackbarService,
-    private _tokenStoreService : TokenStoreService
+    private _tokenStoreService: TokenStoreService
   ) {}
   miniMize() {
     this.ipcRenderer.ipcRenderer.send("miniMizeApp", "miniMizeApp");
@@ -60,16 +60,19 @@ export class LoginScreenComponent implements OnInit {
     );
   }
   handleResponseToken(data) {
-    this._tokenStoreService.handle(data.token)
+    this._tokenStoreService.handle(data.token);
     // this.route.navigateByUrl('/home');
     // this._cookies.setCookie("_token", data.token, 30);
-    this.ipcRenderer.ipcRenderer.send('relaunch');
-
+    this.ipcRenderer.ipcRenderer.send("relaunch");
   }
   ngOnInit(): void {
     this.loginForm = this._fb.group({
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.minLength(6)]],
+    });
+
+    this.ipcRenderer.ipcRenderer.on("download-progress", (event, text) => {
+      console.log(event, text);
     });
   }
 }
