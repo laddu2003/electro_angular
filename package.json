@@ -87,6 +87,7 @@
     "@angular/cdk": "10.2.2",
     "@angular/forms": "^10.0.0 || ^11.0.0-0",
     "@angular/material": "10.2.2",
-    "angular-jwt": "0.1.11"
+    "angular-jwt": "0.1.11",
+    "electron-updater": "4.3.5"
   }
 }

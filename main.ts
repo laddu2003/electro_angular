@@ -10,7 +10,8 @@ import {
 } from "electron";
 import * as path from "path";
 import * as url from "url";
-
+import * as auto_Updater from "electron-updater";
+const { autoUpdater } = auto_Updater;
 let win: BrowserWindow = null;
 const args = process.argv.slice(1),
   serve = args.some((val) => val === "--serve");
@@ -131,6 +132,7 @@ try {
       createWindow();
       actionCenter(win);
     }, 400);
+    autoUpdater.checkForUpdatesAndNotify();
   });
   // Quit when all windows are closed.
   app.on("window-all-closed", () => {
@@ -152,3 +154,39 @@ try {
   // Catch Error
   // throw e;
 }
+
+// auto update
+autoUpdater.on("checking-for-update", () => {
+  console.log("Checking for update...");
+});
+
+autoUpdater.on("update-available", (info) => {
+  console.log("Update available.");
+});
+
+autoUpdater.on("update-not-available", (info) => {
+  console.log("Update not available.");
+});
+
+autoUpdater.on("error", (err) => {
+  console.log("Error in auto-updater. " + err);
+});
+
+autoUpdater.on("download-progress", (progressObj) => {
+  let log_message = "Download speed: " + progressObj.bytesPerSecond;
+  log_message = log_message + " - Downloaded " + progressObj.percent + "%";
+  log_message =
+    log_message +
+    " (" +
+    progressObj.transferred +
+    "/" +
+    progressObj.total +
+    ")";
+  // dispatch(log_message)
+  // win.webContents.send("download-progress", progressObj.percent);
+  console.log("download-progress", progressObj.percent);
+});
+
+autoUpdater.on("update-downloaded", (info) => {
+  console.log("Update downloaded");
+});
