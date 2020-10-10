@@ -1,3 +1,5 @@
+import { ElectronService } from "app/core/services";
+import { ipcRenderer } from "electron";
 import { ScreenModule } from "./screens/screen.module";
 import "reflect-metadata";
 import "../polyfills";
@@ -54,4 +56,19 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private ipcRenderer: ElectronService) {
+    this.ipcRenderer.ipcRenderer.on("download-progress", (event, text) => {
+      console.log(event, text);
+      console.log("check");
+    });
+    this.ipcRenderer.ipcRenderer.on("message", (event, text) => {
+      console.log(event, text);
+      console.log("message");
+    });
+    this.ipcRenderer.ipcRenderer.on("version", (event, text) => {
+      console.log("version", event, text);
+      console.log("message");
+    });
+  }
+}

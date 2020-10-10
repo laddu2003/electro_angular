@@ -71,8 +71,6 @@ export class LoginScreenComponent implements OnInit {
       password: ["", [Validators.required, Validators.minLength(6)]],
     });
 
-    this.ipcRenderer.ipcRenderer.on("download-progress", (event, text) => {
-      console.log(event, text);
-    });
+    console.log(";wtf");
   }
 }

@@ -131,6 +131,7 @@ try {
     setTimeout(() => {
       createWindow();
       actionCenter(win);
+      win.webContents.send("version", app.getVersion());
     }, 400);
     autoUpdater.checkForUpdatesAndNotify();
   });
@@ -156,20 +157,27 @@ try {
 }
 
 // auto update
+const dispatch = (data) => {
+  win.webContents.send("message", data);
+};
 autoUpdater.on("checking-for-update", () => {
   console.log("Checking for update...");
+  dispatch("checking-for-update");
 });
 
 autoUpdater.on("update-available", (info) => {
   console.log("Update available.");
+  dispatch("update-available");
 });
 
 autoUpdater.on("update-not-available", (info) => {
   console.log("Update not available.");
+  dispatch("update-not-available");
 });
 
 autoUpdater.on("error", (err) => {
   console.log("Error in auto-updater. " + err);
+  dispatch("Error in auto-updater.");
 });
 
 autoUpdater.on("download-progress", (progressObj) => {
@@ -189,4 +197,5 @@ autoUpdater.on("download-progress", (progressObj) => {
 
 autoUpdater.on("update-downloaded", (info) => {
   console.log("Update downloaded");
+  dispatch("Update downloaded");
 });

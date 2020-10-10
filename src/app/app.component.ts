@@ -15,11 +15,11 @@ export class AppComponent {
   constructor(
     private electronService: ElectronService,
     private translate: TranslateService,
-     _token: TokenStoreService
+    _token: TokenStoreService,
+    private ipcRenderer: ElectronService
   ) {
     this.translate.setDefaultLang("en");
     this.token = _token.isLoggedIn();
     console.log(this.token);
-
   }
 }
