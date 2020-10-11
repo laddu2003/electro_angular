@@ -26,6 +26,15 @@
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "lint": "ng lint"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laddu2003/electro_angular.git"
+  },
+  "bugs": {
+    "url": "https://github.com/laddu2003/electro_angular/issues"
+  },
+  "homepage": "https://github.com/laddu2003/electro_angular#readme",
+  "keywords": [],
   "devDependencies": {
     "@angular-builders/custom-webpack": "9.2.0",
     "@angular-devkit/build-angular": "0.1000.8",
