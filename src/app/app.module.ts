@@ -5,7 +5,7 @@ import "reflect-metadata";
 import "../polyfills";
 
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
+import { NgModule, OnInit } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { CoreModule } from "./core/core.module";
@@ -56,19 +56,40 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-  constructor(private ipcRenderer: ElectronService) {
-    this.ipcRenderer.ipcRenderer.on("download-progress", (event, text) => {
-      console.log(event, text);
-      console.log("check");
-    });
-    this.ipcRenderer.ipcRenderer.on("message", (event, text) => {
-      console.log(event, text);
-      console.log("message");
-    });
-    this.ipcRenderer.ipcRenderer.on("version", (event, text) => {
-      console.log("version", event, text);
-      console.log("message");
-    });
+export class AppModule implements OnInit {
+  ipcRenderer;
+  constructor(private es: ElectronService) {
+    // es.ipcRenderer.on("version", (e, t) => {
+    //   console.log(e, t);
+    // });
+    // this.ipcRenderer = window
+    //   .require("electron")
+    //   .ipcRenderer.on("version", (e, t) => {
+    //     console.log(e, t);
+    //   });
+    // console.log(this.ipcRenderer);
+    // this.ipcRenderer
+    //   .on("version", (e, t) => {
+    //     console.log(e, t);
+    //   })
+    //   .on("version", (e, t) => {
+    //     console.log(e, t);
+    //   });
+    // es.ipcRenderer.on("version", (res) => {
+    //   console.log(res);
+    // });
+    // this.ipcRenderer.ipcRenderer.on("download-progress", (event, text) => {
+    //   console.log(event, text);
+    //   console.log("check");
+    // });
+    // this.ipcRenderer.ipcRenderer.on("message", (event, text) => {
+    //   console.log(event, text);
+    //   console.log("message");
+    // });
+    // this.ipcRenderer.ipcRenderer.on("version", (event, text) => {
+    //   console.log("version", event, text);
+    //   console.log("message");
+    // });
   }
+  ngOnInit() {}
 }

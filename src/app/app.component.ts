@@ -21,5 +21,18 @@ export class AppComponent {
     this.translate.setDefaultLang("en");
     this.token = _token.isLoggedIn();
     console.log(this.token);
+    // this.ipcRenderer.ipcRenderer.on("version", (res) => {
+    //   console.log(res);
+    // });
+    // this.electronService.ipcRenderer.on("version", (res) => {
+    //   console.log(res);
+    // });
+    this.electronService.ipcRenderer.send("client-app-load", "client-app-load");
+    this.electronService.ipcRenderer.on("version", (e, text) => {
+      console.log("app version ", text);
+    });
+    this.electronService.ipcRenderer.on("message", (e, text) => {
+      console.log("message ", text);
+    });
   }
 }

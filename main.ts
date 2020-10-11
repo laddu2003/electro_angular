@@ -28,8 +28,8 @@ function createWindow(): BrowserWindow {
     resizable: false,
     webPreferences: {
       nodeIntegration: true,
-      allowRunningInsecureContent: serve ? true : false,
-      enableRemoteModule: true, // true if you want to run 2e2 test or use remote module in renderer context (ie. Angular)
+      // allowRunningInsecureContent: serve ? true : false,
+      // enableRemoteModule: true, // true if you want to run 2e2 test or use remote module in renderer context (ie. Angular)
     },
   });
 
@@ -60,10 +60,59 @@ function createWindow(): BrowserWindow {
 
   return win;
 }
+const dispatch = (data) => {
+  win.webContents.send("message", data);
+};
+// load all event after client app load
+ipcMain.on("client-app-load", (e, option) => {
+  console.log(option);
+
+  win.webContents.send("version", app.getVersion());
+  // auto update
+
+  autoUpdater.on("checking-for-update", () => {
+    console.log("Checking for update...");
+    dispatch("checking-for-update");
+  });
+
+  autoUpdater.on("update-available", (info) => {
+    console.log("Update available.");
+    dispatch("update-available");
+  });
+
+  autoUpdater.on("update-not-available", (info) => {
+    console.log("Update not available.");
+    dispatch("update-not-available");
+  });
+
+  autoUpdater.on("error", (err) => {
+    console.log("Error in auto-updater. " + err);
+    dispatch("Error in auto-updater.");
+  });
+
+  autoUpdater.on("download-progress", (progressObj) => {
+    let log_message = "Download speed: " + progressObj.bytesPerSecond;
+    log_message = log_message + " - Downloaded " + progressObj.percent + "%";
+    log_message =
+      log_message +
+      " (" +
+      progressObj.transferred +
+      "/" +
+      progressObj.total +
+      ")";
+    // dispatch(log_message)
+    win.webContents.send("download-progress", progressObj.percent);
+    console.log("download-progress", progressObj.percent);
+  });
+
+  autoUpdater.on("update-downloaded", (info) => {
+    console.log("Update downloaded");
+    dispatch("Update downloaded");
+  });
+});
 ipcMain.on("miniMizeApp", (e, options) => {
   BrowserWindow.getFocusedWindow().minimize();
 });
-
 ipcMain.on("maximize", (e, options) => {
   BrowserWindow.getFocusedWindow().maximize();
 });
@@ -83,6 +132,7 @@ ipcMain.on("relaunch", (e, options) => {
   app.exit(0);
   console.log("relaunch");
 });
+
 let tray;
 var actionCenter = (currenWindowRunning) => {
   currenWindowRunning.on("close", (e) => {
@@ -128,12 +178,14 @@ try {
     //   //this will get call for Control+Shift+I.
     //   return false;
     // });
+    autoUpdater.checkForUpdatesAndNotify();
     setTimeout(() => {
       createWindow();
       actionCenter(win);
-      win.webContents.send("version", app.getVersion());
+      console.log("app version", app.getVersion());
+
+      // win.webContents.send("version", "Sunle bhai");
     }, 400);
-    autoUpdater.checkForUpdatesAndNotify();
   });
   // Quit when all windows are closed.
   app.on("window-all-closed", () => {
@@ -155,47 +207,3 @@ try {
   // Catch Error
   // throw e;
 }
-
-// auto update
-const dispatch = (data) => {
-  win.webContents.send("message", data);
-};
-autoUpdater.on("checking-for-update", () => {
-  console.log("Checking for update...");
-  dispatch("checking-for-update");
-});
-
-autoUpdater.on("update-available", (info) => {
-  console.log("Update available.");
-  dispatch("update-available");
-});
-
-autoUpdater.on("update-not-available", (info) => {
-  console.log("Update not available.");
-  dispatch("update-not-available");
-});
-
-autoUpdater.on("error", (err) => {
-  console.log("Error in auto-updater. " + err);
-  dispatch("Error in auto-updater.");
-});
-
-autoUpdater.on("download-progress", (progressObj) => {
-  let log_message = "Download speed: " + progressObj.bytesPerSecond;
-  log_message = log_message + " - Downloaded " + progressObj.percent + "%";
-  log_message =
-    log_message +
-    " (" +
-    progressObj.transferred +
-    "/" +
-    progressObj.total +
-    ")";
-  // dispatch(log_message)
-  win.webContents.send("download-progress", progressObj.percent);
-  console.log("download-progress", progressObj.percent);
-});
-
-autoUpdater.on("update-downloaded", (info) => {
-  console.log("Update downloaded");
-  dispatch("Update downloaded");
-});

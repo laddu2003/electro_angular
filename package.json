@@ -1,6 +1,6 @@
 {
   "name": "angular-electron-app",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Angular 10 with Electron (Typescript + SASS + Hot Reload)",
   "author": {
     "name": "Gaurav Palaspagar",

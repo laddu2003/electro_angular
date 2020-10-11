@@ -30,11 +30,12 @@ export class ElectronService {
     // Conditional imports
     if (this.isElectron) {
       this.ipcRenderer = window.require("electron").ipcRenderer;
+      // this.ipcRendererRemote = window.require("electron").remote;
       this.desktopCapturer = window.require("electron").desktopCapturer;
       this.webFrame = window.require("electron").webFrame;
       this.electronScreen = window.require("electron").remote.screen;
       // If you wan to use remote object, pleanse set enableRemoteModule to true in main.ts
-      // this.remote = window.require('electron').remote;
+      this.remote = window.require("electron").remote;
 
       this.childProcess = window.require("child_process");
       this.fs = window.require("fs");
