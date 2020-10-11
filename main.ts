@@ -68,47 +68,7 @@ ipcMain.on("client-app-load", (e, option) => {
   console.log(option);
 
   win.webContents.send("version", app.getVersion());
-  // auto update
-
-  autoUpdater.on("checking-for-update", () => {
-    console.log("Checking for update...");
-    dispatch("checking-for-update");
-  });
-
-  autoUpdater.on("update-available", (info) => {
-    console.log("Update available.");
-    dispatch("update-available");
-  });
-
-  autoUpdater.on("update-not-available", (info) => {
-    console.log("Update not available.");
-    dispatch("update-not-available");
-  });
-
-  autoUpdater.on("error", (err) => {
-    console.log("Error in auto-updater. " + err);
-    dispatch("Error in auto-updater.");
-  });
-
-  autoUpdater.on("download-progress", (progressObj) => {
-    let log_message = "Download speed: " + progressObj.bytesPerSecond;
-    log_message = log_message + " - Downloaded " + progressObj.percent + "%";
-    log_message =
-      log_message +
-      " (" +
-      progressObj.transferred +
-      "/" +
-      progressObj.total +
-      ")";
-    // dispatch(log_message)
-    win.webContents.send("download-progress", progressObj.percent);
-    console.log("download-progress", progressObj.percent);
-  });
-
-  autoUpdater.on("update-downloaded", (info) => {
-    console.log("Update downloaded");
-    dispatch("Update downloaded");
-  });
+  autoUpdater.checkForUpdatesAndNotify();
 });
 ipcMain.on("miniMizeApp", (e, options) => {
   BrowserWindow.getFocusedWindow().minimize();
@@ -178,7 +138,7 @@ try {
     //   //this will get call for Control+Shift+I.
     //   return false;
     // });
-    autoUpdater.checkForUpdatesAndNotify();
+
     setTimeout(() => {
       createWindow();
       actionCenter(win);
@@ -207,3 +167,45 @@ try {
   // Catch Error
   // throw e;
 }
+
+// auto update
+
+autoUpdater.on("checking-for-update", () => {
+  console.log("Checking for update...");
+  dispatch("checking-for-update");
+});
+
+autoUpdater.on("update-available", (info) => {
+  console.log("Update available.");
+  dispatch("update-available");
+});
+
+autoUpdater.on("update-not-available", (info) => {
+  console.log("Update not available.");
+  dispatch("update-not-available");
+});
+
+autoUpdater.on("error", (err) => {
+  console.log("Error in auto-updater. " + err);
+  dispatch("Error in auto-updater.");
+});
+
+autoUpdater.on("download-progress", (progressObj) => {
+  let log_message = "Download speed: " + progressObj.bytesPerSecond;
+  log_message = log_message + " - Downloaded " + progressObj.percent + "%";
+  log_message =
+    log_message +
+    " (" +
+    progressObj.transferred +
+    "/" +
+    progressObj.total +
+    ")";
+  // dispatch(log_message)
+  win.webContents.send("download-progress", progressObj.percent);
+  console.log("download-progress", progressObj.percent);
+});
+
+autoUpdater.on("update-downloaded", (info) => {
+  console.log("Update downloaded");
+  dispatch("Update downloaded");
+});
