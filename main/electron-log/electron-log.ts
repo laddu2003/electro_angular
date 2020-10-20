@@ -15,6 +15,8 @@ export function writeLog(level: string, message: any) {
 
   const ul =
     os.homedir() + "\\AppData\\Roaming\\angular-electron-autoUpdater\\logs\\";
+  console.log(ul);
+
   log.transports.file.file = ul + currentdate + ".txt";
   log.transports.file.level = false;
   log.transports.console.level = false;

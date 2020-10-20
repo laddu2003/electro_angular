@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateHandler = void 0;
 var electron_updater_1 = require("electron-updater");
 var electron_1 = require("electron");
+var electron_log_1 = require("../electron-log/electron-log");
 function updateHandler(win) {
     if (win == null) {
         return 0;
@@ -26,36 +27,36 @@ function updateHandler(win) {
     electron_updater_1.autoUpdater.checkForUpdates();
     //  अद्यतन त्रुटि
     electron_updater_1.autoUpdater.on("error", function (message) {
-        console.log("error", returnData.error.msg);
+        electron_log_1.writeLog("error", returnData.error.msg);
         dispatch("error");
     });
     //  अपडेट्स के लिए जांच हो रही है
     electron_updater_1.autoUpdater.on("checking-for-update", function () {
-        console.log("warn", returnData.checking.msg);
-        console.log("message", returnData.checking.msg);
+        electron_log_1.writeLog("warn", returnData.checking.msg);
+        electron_log_1.writeLog("message", returnData.checking.msg);
         dispatch("checking-for-update");
     });
     //  नया संस्करण मिला
     electron_updater_1.autoUpdater.on("update-available", function (ev, info) {
-        console.log("warn", returnData.updateAva.msg);
-        console.log("message", returnData.updateAva.msg);
+        electron_log_1.writeLog("warn", returnData.updateAva.msg);
+        electron_log_1.writeLog("message", returnData.updateAva.msg);
         dispatch("update-available");
     });
     //  वर्तमान में नवीनतम संस्करण
     electron_updater_1.autoUpdater.on("update-not-available", function (info) {
-        console.log("error", returnData.updateNotAva.msg);
-        console.log("message", returnData.updateNotAva.msg);
+        electron_log_1.writeLog("error", returnData.updateNotAva.msg);
+        electron_log_1.writeLog("message", returnData.updateNotAva.msg);
         dispatch("update-not-available");
     });
     // अद्यतन पैकेज डाउनलोड प्रगति समय
     electron_updater_1.autoUpdater.on("download-progress", function (progressObj) {
-        console.log("warn", progressObj);
-        console.log("downloadProgress", progressObj.percent.toString());
+        electron_log_1.writeLog("warn", progressObj);
+        electron_log_1.writeLog("downloadProgress", progressObj.percent.toString());
         dispatch("download-progress");
     });
     // अद्यतन पैकेज डाउनलोड होने के बाद एक घटना को ट्रिगर करता है
     electron_updater_1.autoUpdater.on("update-downloaded", function (event, releaseNotes, releaseName, releaseDate) {
-        console.log("info", "A new version has been downloaded");
+        electron_log_1.writeLog("info", "A new version has been downloaded");
         var dialogOpts = {
             buttons: ["shut down", "Later"],
             title: "Version update prompt",
