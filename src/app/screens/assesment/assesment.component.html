@@ -1,1 +1,65 @@
-<p>assesment works!</p>
+<mat-spinner
+  class="spinner"
+  *ngIf="shwoSpinner == true; else elseBlock"
+></mat-spinner>
+
+<div #elseBlock>
+  <div class="container p-3">
+    <div class="row">
+      <div class="col-12">
+        <div class="mat-card">
+          <div class="card-header"></div>
+          <div class="mat-card-content">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Date Start</th>
+                  <th scope="col">Date End</th>
+                  <th scope="col">Priority Status</th>
+                  <th scope="col">Work Status</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of assignmentList; let i = index">
+                  <th scope="row">{{ i + 1 }}</th>
+                  <td>{{ item.date_start }}</td>
+                  <td>{{ item.end_start }}</td>
+                  <td>{{ item.priority_status }}</td>
+                  <td>{{ item.work_status }}</td>
+                  <td>
+                    <button
+                      (click)="openDialog(item)"
+                      type="button"
+                      class="btn btn-raised btn-primary"
+                    >
+                      Details
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer">
+            <div class="form-group">
+              <label for="page">Page</label>
+              <select
+                (change)="paginationCall($event)"
+                style="width: 100px"
+                class="form-control"
+              >
+                <option
+                  *ngFor="let item_page of total_pages"
+                  [value]="item_page"
+                >
+                  {{ item_page }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

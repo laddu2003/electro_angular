@@ -1,7 +1,7 @@
 {
-  "name": "angular-electron-app",
-  "version": "1.0.8",
-  "description": "Angular 10 with Electron (Typescript + SASS + Hot Reload)",
+  "name": "trackbotic",
+  "version": "1.0.12",
+  "description": "App that incress productivity",
   "author": {
     "name": "Gaurav Palaspagar",
     "email": "gaurav.palaspagar@hotmail.com"
@@ -34,7 +34,6 @@
     "url": "https://github.com/laddu2003/electro_angular/issues"
   },
   "homepage": "https://github.com/laddu2003/electro_angular#readme",
-  "keywords": [],
   "devDependencies": {
     "@angular-builders/custom-webpack": "9.2.0",
     "@angular-devkit/build-angular": "0.1000.8",

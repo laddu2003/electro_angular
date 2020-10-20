@@ -7,7 +7,7 @@
     [mode]="'side'"
     [opened]="true"
   >
-    <mat-toolbar>App Name</mat-toolbar>
+    <mat-toolbar>Trackbotic</mat-toolbar>
     <mat-nav-list>
       <div class="fill-height-or-more">
         <div>
@@ -130,19 +130,34 @@
         </ul>
       </div>
     </nav>
-    <div aria-label="page">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <mat-slide-toggle [(ngModel)]="isChecked" color="primary"
-            >Watch Mode {{ isChecked }}
-          </mat-slide-toggle>
-        </li>
-        <li class="breadcrumb-item">
-          <mat-slide-toggle color="primary">Work Time</mat-slide-toggle>
-        </li>
-      </ol>
-    </div>
-    <div>
+    <nav>
+      <div class="container">
+        <div class="row">
+          <div class="card" style="width: 100vw">
+            <ol class="nav p-3">
+              <li class="breadcrumb-item active" style="margin-right: auto">
+                <mat-slide-toggle (change)="watchMode($event)" color="primary"
+                  >Watch Mode
+                </mat-slide-toggle>
+              </li>
+
+              <li
+                mat-fab
+                matTooltipPosition="right"
+                matTooltip="logout"
+                style="cursor: pointer"
+                class="pull-right"
+                (click)="logout()"
+              >
+                <span class="material-icons"> exit_to_app </span>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div style="height: 100vh">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

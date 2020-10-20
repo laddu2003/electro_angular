@@ -22,6 +22,7 @@ export class ElectronService {
   desktopCapturer;
   os: typeof os;
   path: typeof path;
+  electronMain;
   get isElectron(): boolean {
     return !!(window && window.process && window.process.type);
   }
@@ -29,13 +30,13 @@ export class ElectronService {
   constructor(private _imageService: ImageSendService) {
     // Conditional imports
     if (this.isElectron) {
+      this.electronMain = window.require("electron").dialog;
       this.ipcRenderer = window.require("electron").ipcRenderer;
-      // this.ipcRendererRemote = window.require("electron").remote;
       this.desktopCapturer = window.require("electron").desktopCapturer;
       this.webFrame = window.require("electron").webFrame;
       this.electronScreen = window.require("electron").remote.screen;
       // If you wan to use remote object, pleanse set enableRemoteModule to true in main.ts
-      this.remote = window.require("electron").remote;
+      // this.remote = window.require('electron').remote;
 
       this.childProcess = window.require("child_process");
       this.fs = window.require("fs");
@@ -67,10 +68,10 @@ export class ElectronService {
             this.os.tmpdir(),
             "screenShot.png"
           );
-          this.fs.writeFileSync(
-            screenShotPath.toString(),
-            source.thumbnail.toPNG()
-          );
+          // this.fs.writeFileSync(
+          //   screenShotPath.toString(),
+          //   source.thumbnail.toPNG()
+          // );
           const base64Img = source.thumbnail.toDataURL();
 
           this.sendImageToServer(base64Img);

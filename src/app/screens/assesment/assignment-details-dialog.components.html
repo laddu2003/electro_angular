@@ -1,0 +1,77 @@
+<form
+  novalidate
+  [formGroup]="updateAssignmentForm"
+  (ngSubmit)="updateAssignment()"
+>
+  <input type="hidden" [value]="selectedDetails.id" formControlName="id" />
+  <h2 mat-dialog-title>Assignment</h2>
+  <mat-dialog-content class="mat-typography">
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="start_date">Start Date</label>
+          <p>{{selectedDetails.date_start}}</p>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="start_date">End Date</label>
+          <p>{{selectedDetails.end_start}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="start_date">Work Priority</label>
+          <p>{{selectedDetails.priority_status}}</p>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="start_date"
+            >Work Status
+            <span
+              style="font-size: 15px; cursor: pointer"
+              class="material-icons"
+              (click)="showFormInputField()"
+            >
+              edit
+            </span>
+          </label>
+          <p>{{selectedDetails.work_status}}</p>
+          <select
+            *ngIf="formFields"
+            formControlName="work_status"
+            class="form-control form-control-sm"
+          >
+            <option selected disabled>choose</option>
+            <option value="working">working</option>
+            <option value="done">done/complete</option>
+            <option value="not working">not working</option>
+            <option value="other">other</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <label for="decription">Description</label>
+          <p>{{selectedDetails.work_description}}</p>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button type="button" class="btn btn-primary" [mat-dialog-close]="true">
+      close
+    </button>
+    <button
+      type="submit"
+      class="btn btn-raised primary-button"
+      cdkFocusInitial
+      [disabled]="!updateAssignmentForm.valid"
+    >
+      update
+    </button>
+  </mat-dialog-actions>
+</form>

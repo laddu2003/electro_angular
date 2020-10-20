@@ -1,11 +1,16 @@
 html,
 body {
   height: 100%;
-  overflow: hidden;
+  overflow: hidden !important;
 }
 
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
+
+.primary-button{
+  background: #99baff;
+  color: white;
 }

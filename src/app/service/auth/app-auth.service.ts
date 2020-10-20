@@ -12,4 +12,8 @@ export class AppAuthService {
       observe: "response",
     });
   }
+
+  sendLogoutRequest() {
+    return this._http.post(`${this._baseUrl.baseUrlEmp}/logout`, {});
+  }
 }

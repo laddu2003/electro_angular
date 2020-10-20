@@ -1,1 +1,42 @@
-<p>media works!</p>
+<mat-spinner
+  class="spinner"
+  *ngIf="shwoSpinner == true; else elseBlock"
+></mat-spinner>
+
+<div #elseBlock>
+  <div class="container p-3">
+    <div class="row fixed-content">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header"></div>
+          <div class="card-body">
+            <div class="row">
+              <div *ngFor="let item of mediaList" class="col-md-4">
+                <div class="card">
+                  <div class="">
+                    <img
+                      class="card-img img-thumbnail"
+                      [src]="item?.imagePath"
+                      [alt]="item?.imagePath"
+                    />
+                  </div>
+                  <div class="card-footer">
+                    <div class="form-group">
+                      <small class="text-muted"
+                        >Taken At - {{ item?.take_time }}</small
+                      >
+                    </div>
+                    <div class="form-group">
+                      <button (click)="delete(item)">delete</button>
+                    </div>
+                  </div>
+                </div>
+                <br />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

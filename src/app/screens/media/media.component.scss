@@ -1,0 +1,19 @@
+.fixed-content {
+  top: 150px;
+  bottom: 0;
+  position: fixed;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.spinner {
+  display: block;
+  position: fixed;
+  z-index: 1031;
+  /* High z-index so it is on top of the page */
+  top: 50%;
+  right: 41%;
+  /* or: left: 50%; */
+
+  /* half of the elements widht */
+}
