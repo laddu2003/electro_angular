@@ -1,7 +1,8 @@
 import { autoUpdater } from "electron-updater";
 import { dialog } from "electron";
+import { writeLog } from "../electron-log/electron-log";
 
-export function updateHandler(win) {
+export function updateHandler(win?) {
   if (win == null) {
     return 0;
   }
@@ -26,36 +27,36 @@ export function updateHandler(win) {
 
   //  अद्यतन त्रुटि
   autoUpdater.on("error", (message) => {
-    console.log("error", returnData.error.msg);
+    writeLog("error", returnData.error.msg);
     dispatch("error");
   });
 
   //  अपडेट्स के लिए जांच हो रही है
   autoUpdater.on("checking-for-update", () => {
-    console.log("warn", returnData.checking.msg);
-    console.log("message", returnData.checking.msg);
+    writeLog("warn", returnData.checking.msg);
+    writeLog("message", returnData.checking.msg);
     dispatch("checking-for-update");
   });
 
   //  नया संस्करण मिला
   autoUpdater.on("update-available", (ev, info) => {
-    console.log("warn", returnData.updateAva.msg);
+    writeLog("warn", returnData.updateAva.msg);
 
-    console.log("message", returnData.updateAva.msg);
+    writeLog("message", returnData.updateAva.msg);
     dispatch("update-available");
   });
 
   //  वर्तमान में नवीनतम संस्करण
   autoUpdater.on("update-not-available", (info) => {
-    console.log("error", returnData.updateNotAva.msg);
-    console.log("message", returnData.updateNotAva.msg);
+    writeLog("error", returnData.updateNotAva.msg);
+    writeLog("message", returnData.updateNotAva.msg);
     dispatch("update-not-available");
   });
 
   // अद्यतन पैकेज डाउनलोड प्रगति समय
   autoUpdater.on("download-progress", (progressObj) => {
-    console.log("warn", progressObj);
-    console.log("downloadProgress", progressObj.percent.toString());
+    writeLog("warn", progressObj);
+    writeLog("downloadProgress", progressObj.percent.toString());
     dispatch("download-progress");
   });
 
@@ -63,7 +64,7 @@ export function updateHandler(win) {
   autoUpdater.on(
     "update-downloaded",
     (event, releaseNotes, releaseName, releaseDate) => {
-      console.log("info", "A new version has been downloaded");
+      writeLog("info", "A new version has been downloaded");
       const dialogOpts = {
         buttons: ["shut down", "Later"],
         title: "Version update prompt",

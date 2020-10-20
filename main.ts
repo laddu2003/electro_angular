@@ -12,7 +12,7 @@ import {
 } from "electron";
 import * as path from "path";
 import * as url from "url";
-let win: BrowserWindow = null;
+export let win: BrowserWindow = null;
 
 const args = process.argv.slice(1),
   serve = args.some((val) => val === "--serve");
@@ -58,12 +58,12 @@ function createWindow(): BrowserWindow {
     win = null;
   });
 
+  ipcMain.on("app_lod_dashboard", (e, options) => {
+    app.requestSingleInstanceLock(); // सुनिश्चित करें कि केवल एक इलेक्ट्रॉन अनुप्रयोग विंडो चल रही है
+    updateHandler(win);
+  });
   return win;
 }
-ipcMain.on("app_lod_dashboard", (e, options) => {
-  app.requestSingleInstanceLock(); // सुनिश्चित करें कि केवल एक इलेक्ट्रॉन अनुप्रयोग विंडो चल रही है
-  updateHandler(win);
-});
 
 ipcMain.on("miniMizeApp", (e, options) => {
   BrowserWindow.getFocusedWindow().minimize();
